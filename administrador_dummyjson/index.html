@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>PANEL DE ADMINISTRACIÓN</h1>
+            <div class="controles">
+                <input id="search" type="text" placeholder="Buscar productos...">
+                <button id="btnBuscar" class="btn">Buscar</button>
+                <button id="btnNuevo" class="btn btn-success" onclick="window.location.href='add.html'">+ Nuevo Producto</button>
+                <a href="../index.html">Volver al Inicio</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="app">
+
+        <section class="filtros-bar">
+            <div class="filtro-grupo">
+                <label for="filtroCategoria">Filtrar por categoría:</label>
+                <select id="filtroCategoria">
+                    <option value="">Todas las categorías</option>
+                </select>
+            </div>
+
+            <div class="filtro-grupo">
+                <label for="ordenarPor">Ordenar por:</label>
+                <select id="ordenarPor">
+                    <option value="">Sin ordenar</option>
+                    <option value="title-asc">Título (A-Z)</option>
+                    <option value="title-desc">Título (Z-A)</option>
+                    <option value="price-asc">Precio (Menor a Mayor)</option>
+                    <option value="price-desc">Precio (Mayor a Menor)</option>
+                </select>
+            </div>
+
+            <div class="info-resultados">
+                <span id="totalProductos">0 productos encontrados</span>
+            </div>
+        </section>
+
+        <section id="catalogo" class="vista">
+            <div class="tabla-container">
+                <table id="tablaProductos">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Imagen</th>
+                            <th>Título</th>
+                            <th>Precio</th>
+                            <th>Categoría</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="producto-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section class="paginacion">
+            <button id="btnAnterior" class="btn btn-pag" disabled>← Anterior</button>
+            <span id="infoPagina">Página 1 de 1</span>
+            <button id="btnSiguiente" class="btn btn-pag">Siguiente →</button>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        Panel de Administración - Datos obtenidos de 
+        <a href="https://dummyjson.com/products" target="_blank">dummyjson.com</a>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

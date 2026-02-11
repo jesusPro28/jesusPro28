@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto </title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .form-container h1 {
+            color: #2c3e50;
+            margin-bottom: 24px;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn-back {
+            background: #95a5a6;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .btn-back:hover {
+            background: #7f8c8d;
+        }
+
+        .btn-submit {
+            background: #27ae60;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 2;
+        }
+
+        .btn-submit:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39,174,96,0.3);
+        }
+
+        #mensaje-exito {
+            margin-top: 20px;
+            padding: 16px;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            color: #155724;
+            display: none;
+        }
+
+        #mensaje-exito strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>SHOPMASTER - AGREGAR PRODUCTO</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h1>Alta de Nuevo Producto</h1>
+
+            <div class="form-group">
+                <label>Nombre del Producto: *</label>
+                <input type="text" id="titulo" placeholder="Ej. iPhone 15 Pro Max">
+            </div>
+
+            <div class="form-group">
+                <label>Precio ($): *</label>
+                <input type="number" id="precio" placeholder="0.00" step="0.01" min="0">
+            </div>
+
+            <div class="form-group">
+                <label>Categoría: *</label>
+                <select id="categoria">
+                    <option value="smartphones">Smartphones</option>
+                    <option value="laptops">Laptops</option>
+                    <option value="fragrances">Fragancias</option>
+                    <option value="skincare">Cuidado de piel</option>
+                    <option value="groceries">Comestibles</option>
+                    <option value="home-decoration">Decoración del hogar</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Descripción: *</label>
+                <textarea id="descripcion" rows="4" placeholder="Detalles del producto..."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn-back" onclick="window.location.href='index.html'">← Volver</button>
+                <button class="btn-submit" onclick="crearProducto()">Guardar Producto</button>
+            </div>
+
+            <div id="mensaje-exito"></div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        Panel de Administración - ShopMaster
+    </footer>
+
+    <script>
+        const crearProducto = () => {
+            const titulo = document.getElementById("titulo").value.trim();
+            const precio = document.getElementById("precio").value;
+            const categoria = document.getElementById("categoria").value;
+            const descripcion = document.getElementById("descripcion").value.trim();
+            const mensaje = document.getElementById("mensaje-exito");
+
+            // Validamos que las cajas no estén vacías
+            if (!titulo || !precio || !descripcion) {
+                alert("Por favor, complete todos los campos obligatorios.");
+                return;
+            }
+
+            // Preparamos el objeto que se va a enviar al POST
+            const producto = {
+                title: titulo,
+                price: parseFloat(precio),
+                category: categoria,
+                description: descripcion,
+                thumbnail: 'https://via.placeholder.com/150'
+            };
+
+            // Realizamos el fetch con el método POST
+            fetch('https://dummyjson.com/products/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(producto)
+            })
+            .then((respuesta) => respuesta.json())
+            .then(productoCreado => {
+                console.log("Producto creado:", productoCreado);
+                
+                mensaje.style.display = 'block';
+                mensaje.innerHTML = `
+                    <strong>✅ ¡Producto creado exitosamente!</strong><br>
+                    ID: ${productoCreado.id}<br>
+                    Producto: ${productoCreado.title}<br>
+                    Precio: $${productoCreado.price}<br>
+                    <small>Nota: Al ser una API de prueba, los cambios no se guardan permanentemente en el servidor, pero la simulación fue exitosa.</small>
+                `;
+
+                // Limpiar formulario
+                document.getElementById("titulo").value = '';
+                document.getElementById("precio").value = '';
+                document.getElementById("descripcion").value = '';
+
+                // Redirigir después de 3 segundos
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 3000);
+            })
+            .catch(error => {
+                console.error('Error al crear producto:', error);
+                alert('Error al crear el producto. Intente nuevamente.');
+            });
+        };
+    </script>
+</body>
+</html>
