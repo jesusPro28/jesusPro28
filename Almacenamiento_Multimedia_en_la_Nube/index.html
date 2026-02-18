@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practica de Cloudinary</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="../index.html">Volver al Inicio</a>
+    </header>
+
+    <div class="container">
+
+        <h1>Practica de Cloudinary</h1>
+        <p class="subtitulo">Sube una imagen.</p>
+
+        <div class="card">
+            <label for="fileinput">Selecciona una imagen:</label>
+            <input type="file" id="fileinput" accept="image/*">
+
+            <img id="previewImg" src="" alt="Vista previa" class="hidden">
+
+            <div id="alertError" class="alert-error hidden">
+                <span id="errorTexto"></span>
+            </div>
+
+            <button onclick="subirimg()" id="btnSubir" disabled>
+                Cargar imagen
+            </button>
+
+            <p id="loadingText" class="hidden">Subiendo...</p>
+        </div>
+
+        <div id="resultSection" class="result hidden">
+            <p class="result-ok">Imagen subida exitosamente</p>
+            <img src="" alt="Imagen cargada desde cloudinary" id="imagen">
+            <p class="url-label">URL de Cloudinary:</p>
+            <code id="urlTexto"></code>
+            <br>
+            <button class="btn-reset" onclick="resetear()">Subir otra imagen</button>
+        </div>
+
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
